@@ -1,7 +1,8 @@
 package io.vertx.example;
 
-import io.vertx.core.Vertx;
-import io.vertx.ext.web.Router;
+
+import io.vertx.rxjava.core.Vertx;
+import io.vertx.rxjava.ext.web.Router;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
@@ -29,7 +30,7 @@ public class Server {
     public void setHttpServerInstances(int instances) {
         this.httpServerInstances = instances;
     }
-    @Value("${busInstances:1}")
+    @Value("${busConsumers:1}")
     public void setBusInstances(int instances) {
         this.busInstances = instances;
     }

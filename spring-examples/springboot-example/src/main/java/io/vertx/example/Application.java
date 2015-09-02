@@ -1,9 +1,9 @@
 package io.vertx.example;
 
 
-import io.vertx.core.Vertx;
 import io.vertx.core.VertxOptions;
-import io.vertx.ext.web.Router;
+import io.vertx.rxjava.core.Vertx;
+import io.vertx.rxjava.ext.web.Router;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -44,15 +44,11 @@ public class Application {
                 vertx.setTimer(Integer.valueOf(context.request().params().get("delay")),
                         id -> context.response().end(Thread.currentThread().getName() + "\n")));
         // /bus?message=foo
-        router.get("/bus").handler(context ->{
-            vertx.eventBus().send("testaddress", context.request().params().get("message"), result -> {
-                if (result.succeeded()){
-                    context.response().end(result.result().body().toString()+"\n");
-                } else{
-                    context.fail(result.cause());
-                }
-            });
-        });
+        router.get("/bus").handler(context ->
+                vertx.eventBus().sendObservable("testaddress", context.request().params().get("message"))
+                    .subscribe(
+                            msg -> context.response().end(msg.body().toString() + "\n"),
+                            throwable -> context.fail(500)));
         return router;
     }
 
