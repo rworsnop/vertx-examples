@@ -13,10 +13,10 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class VertxBeans {
     @Bean
-    protected VertxOptions vertxOptions(@Value("${workerPoolSize:}") Integer workerPoolSize){
+    protected VertxOptions vertxOptions(@Value("${eventLoopSize:}") Integer eventLoopSize){
         VertxOptions options = new VertxOptions();
-        if (workerPoolSize != null){
-            options.setWorkerPoolSize(workerPoolSize);
+        if (eventLoopSize != null){
+            options.setEventLoopPoolSize(eventLoopSize);
         }
         return options;
     }
