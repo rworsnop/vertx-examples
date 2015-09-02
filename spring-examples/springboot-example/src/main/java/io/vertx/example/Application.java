@@ -1,11 +1,8 @@
 package io.vertx.example;
 
 
-import io.vertx.core.AsyncResult;
-import io.vertx.core.Handler;
 import io.vertx.core.Vertx;
 import io.vertx.core.VertxOptions;
-import io.vertx.core.eventbus.Message;
 import io.vertx.ext.web.Router;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.SpringApplication;
