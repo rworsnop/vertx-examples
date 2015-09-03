@@ -11,6 +11,8 @@ import org.springframework.context.annotation.Configuration;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.atomic.AtomicReference;
 
+import static java.util.concurrent.TimeUnit.MINUTES;
+
 /**
  * Created by rworsnop on 9/2/15.
  */
@@ -46,7 +48,9 @@ public class VertxBeans {
             countDownLatch.countDown();
 
         });
-        countDownLatch.await();
+        if (!countDownLatch.await(2, MINUTES)){
+            throw new RuntimeException("Could no start");
+        }
         AsyncResult<Vertx> ar = result.get();
         if (ar.succeeded()){
             return ar.result();
